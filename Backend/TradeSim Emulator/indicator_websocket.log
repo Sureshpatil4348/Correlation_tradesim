@@ -1,0 +1,804 @@
+2025-04-01 21:32:02,823 - INFO - MT5 initialized successfully
+2025-04-01 21:33:01,257 - INFO - MT5 initialized successfully
+2025-04-01 21:37:08,522 - INFO - MT5 initialized successfully
+2025-04-01 21:38:27,747 - INFO - MT5 initialized successfully
+2025-04-01 21:38:46,573 - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\Botmudra08\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Botmudra08\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2025-04-01 21:38:46,896 - INFO - Started indicator calculation for strategy 1
+2025-04-01 21:38:46,897 - INFO - Starting calculation loop for strategy 1
+2025-04-01 21:38:46,897 - INFO - Initializing MT5...
+2025-04-01 21:38:46,902 - INFO - MT5 initialized successfully
+2025-04-01 21:38:46,902 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:46,940 - INFO - Correlation result: 0.6163778531476019
+2025-04-01 21:38:46,940 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:46,942 - INFO - RSI result for EURUSD: 39.856801909307734
+2025-04-01 21:38:46,942 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:46,943 - INFO - RSI result for GBPUSD: 44.65648854961877
+2025-04-01 21:38:46,948 - INFO - Started indicator calculation for strategy 2
+2025-04-01 21:38:46,954 - INFO - Started indicator calculation for strategy 3
+2025-04-01 21:38:46,954 - INFO - Starting calculation loop for strategy 2
+2025-04-01 21:38:46,955 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:46,974 - INFO - Correlation result: 0.9496559090548361
+2025-04-01 21:38:46,975 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:46,976 - INFO - RSI result for EURAUD: 44.86241727621079
+2025-04-01 21:38:46,976 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:46,977 - INFO - RSI result for GBPAUD: 49.37747594793404
+2025-04-01 21:38:46,978 - INFO - Starting calculation loop for strategy 3
+2025-04-01 21:38:46,978 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:46,993 - INFO - Correlation result: 0.17006953581339665
+2025-04-01 21:38:46,993 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:46,994 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:46,994 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:46,995 - INFO - RSI result for AUDUSD: 37.83783783783622
+2025-04-01 21:38:47,008 - INFO - Started indicator calculation for strategy 4
+2025-04-01 21:38:47,014 - INFO - Starting calculation loop for strategy 4
+2025-04-01 21:38:47,014 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:47,024 - INFO - Correlation result: 0.005387555770649133
+2025-04-01 21:38:47,024 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:47,025 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:47,025 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:47,026 - INFO - RSI result for NZDUSD: 39.21568627450468
+2025-04-01 21:38:47,319 - INFO - WebSocket connection accepted for strategy 3
+2025-04-01 21:38:47,335 - INFO - WebSocket connection accepted for strategy 1
+2025-04-01 21:38:47,352 - INFO - WebSocket connection accepted for strategy 2
+2025-04-01 21:38:47,368 - INFO - WebSocket connection accepted for strategy 4
+2025-04-01 21:38:47,960 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:47,992 - INFO - Correlation result: 0.6167281794302935
+2025-04-01 21:38:47,992 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:47,994 - INFO - RSI result for EURUSD: 39.568345323741376
+2025-04-01 21:38:47,994 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:47,995 - INFO - RSI result for GBPUSD: 44.20394420394405
+2025-04-01 21:38:47,996 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:48,023 - INFO - Correlation result: 0.9495331232942567
+2025-04-01 21:38:48,023 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:48,024 - INFO - RSI result for EURAUD: 44.37849162011208
+2025-04-01 21:38:48,024 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:48,025 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:48,026 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:48,038 - INFO - Correlation result: 0.2352177644039533
+2025-04-01 21:38:48,038 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:48,039 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:48,039 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:48,040 - INFO - RSI result for AUDUSD: 46.666666666669954
+2025-04-01 21:38:48,041 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:48,053 - INFO - Correlation result: 0.6515666904210973
+2025-04-01 21:38:48,053 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:48,055 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:48,055 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:48,056 - INFO - RSI result for NZDUSD: 56.71641791043812
+2025-04-01 21:38:49,004 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:49,005 - INFO - Correlation result: 0.6167281794302935
+2025-04-01 21:38:49,005 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:49,006 - INFO - RSI result for EURUSD: 39.568345323741376
+2025-04-01 21:38:49,006 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:49,008 - INFO - RSI result for GBPUSD: 44.20394420394405
+2025-04-01 21:38:49,034 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:49,035 - INFO - Correlation result: 0.9495415372614303
+2025-04-01 21:38:49,035 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:49,036 - INFO - RSI result for EURAUD: 44.393992315752804
+2025-04-01 21:38:49,036 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:49,037 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:38:49,049 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:49,050 - INFO - Correlation result: 0.22906147983301353
+2025-04-01 21:38:49,050 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:49,051 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:49,051 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:49,052 - INFO - RSI result for AUDUSD: 44.68085106383129
+2025-04-01 21:38:49,069 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:49,070 - INFO - Correlation result: 0.6515666904210973
+2025-04-01 21:38:49,071 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:49,072 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:49,072 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:49,073 - INFO - RSI result for NZDUSD: 56.71641791043812
+2025-04-01 21:38:50,016 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:50,017 - INFO - Correlation result: 0.6167281794302935
+2025-04-01 21:38:50,018 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:50,019 - INFO - RSI result for EURUSD: 39.568345323741376
+2025-04-01 21:38:50,019 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:50,020 - INFO - RSI result for GBPUSD: 44.20394420394405
+2025-04-01 21:38:50,046 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:50,047 - INFO - Correlation result: 0.9495415372614303
+2025-04-01 21:38:50,047 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:50,048 - INFO - RSI result for EURAUD: 44.393992315752804
+2025-04-01 21:38:50,049 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:50,050 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:38:50,061 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:50,062 - INFO - Correlation result: 0.22906147983301353
+2025-04-01 21:38:50,062 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:50,063 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:50,063 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:50,065 - INFO - RSI result for AUDUSD: 44.68085106383129
+2025-04-01 21:38:50,077 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:50,078 - INFO - Correlation result: 0.6515666904210973
+2025-04-01 21:38:50,078 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:50,079 - INFO - RSI result for EURUSD: 44.26229508196602
+2025-04-01 21:38:50,079 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:50,080 - INFO - RSI result for NZDUSD: 56.71641791043812
+2025-04-01 21:38:50,710 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:50,711 - INFO - Stopped indicator calculation for strategy 1
+2025-04-01 21:38:50,711 - INFO - WebSocket disconnected for strategy 1
+2025-04-01 21:38:50,711 - INFO - Calculation cancelled for strategy 1
+2025-04-01 21:38:50,712 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:50,712 - INFO - Stopped indicator calculation for strategy 2
+2025-04-01 21:38:50,712 - INFO - WebSocket disconnected for strategy 2
+2025-04-01 21:38:50,712 - INFO - Calculation cancelled for strategy 2
+2025-04-01 21:38:50,713 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:50,713 - INFO - Stopped indicator calculation for strategy 3
+2025-04-01 21:38:50,713 - INFO - WebSocket disconnected for strategy 3
+2025-04-01 21:38:50,713 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:50,713 - INFO - Stopped indicator calculation for strategy 4
+2025-04-01 21:38:50,713 - INFO - WebSocket disconnected for strategy 4
+2025-04-01 21:38:50,714 - INFO - Calculation cancelled for strategy 3
+2025-04-01 21:38:50,714 - INFO - Calculation cancelled for strategy 4
+2025-04-01 21:38:55,230 - INFO - Started indicator calculation for strategy 1
+2025-04-01 21:38:55,230 - INFO - Starting calculation loop for strategy 1
+2025-04-01 21:38:55,231 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:55,232 - INFO - Correlation result: 0.6167871895047063
+2025-04-01 21:38:55,232 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:55,233 - INFO - RSI result for EURUSD: 39.532093581283874
+2025-04-01 21:38:55,233 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:55,234 - INFO - RSI result for GBPUSD: 44.12331406551051
+2025-04-01 21:38:55,240 - INFO - Started indicator calculation for strategy 2
+2025-04-01 21:38:55,242 - INFO - Starting calculation loop for strategy 2
+2025-04-01 21:38:55,242 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:55,243 - INFO - Correlation result: 0.9495375488957257
+2025-04-01 21:38:55,243 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:55,244 - INFO - RSI result for EURAUD: 44.393992315752804
+2025-04-01 21:38:55,244 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:55,245 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:55,250 - INFO - Started indicator calculation for strategy 3
+2025-04-01 21:38:55,256 - INFO - Started indicator calculation for strategy 4
+2025-04-01 21:38:55,257 - INFO - Starting calculation loop for strategy 3
+2025-04-01 21:38:55,257 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:55,258 - INFO - Correlation result: 0.24109304760545372
+2025-04-01 21:38:55,258 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:55,259 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:55,259 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:55,260 - INFO - RSI result for AUDUSD: 46.666666666669954
+2025-04-01 21:38:55,260 - INFO - Starting calculation loop for strategy 4
+2025-04-01 21:38:55,260 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:55,261 - INFO - Correlation result: 0.6523525395021549
+2025-04-01 21:38:55,262 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:55,263 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:55,263 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:55,264 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:38:55,600 - INFO - WebSocket connection accepted for strategy 1
+2025-04-01 21:38:55,616 - INFO - WebSocket connection accepted for strategy 3
+2025-04-01 21:38:55,636 - INFO - WebSocket connection accepted for strategy 2
+2025-04-01 21:38:55,650 - INFO - WebSocket connection accepted for strategy 4
+2025-04-01 21:38:56,037 - INFO - WebSocket connection accepted for strategy 1
+2025-04-01 21:38:56,053 - INFO - WebSocket connection accepted for strategy 2
+2025-04-01 21:38:56,069 - INFO - WebSocket connection accepted for strategy 4
+2025-04-01 21:38:56,084 - INFO - WebSocket connection accepted for strategy 3
+2025-04-01 21:38:56,241 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:56,243 - INFO - Correlation result: 0.6167871895047063
+2025-04-01 21:38:56,243 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:56,244 - INFO - RSI result for EURUSD: 39.532093581283874
+2025-04-01 21:38:56,244 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:56,245 - INFO - RSI result for GBPUSD: 44.12331406551051
+2025-04-01 21:38:56,246 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:56,246 - INFO - Correlation result: 0.9495375488957257
+2025-04-01 21:38:56,247 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:56,248 - INFO - RSI result for EURAUD: 44.393992315752804
+2025-04-01 21:38:56,248 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:56,249 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:56,268 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:56,268 - INFO - Correlation result: 0.24109304760545372
+2025-04-01 21:38:56,269 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:56,270 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:56,270 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:56,271 - INFO - RSI result for AUDUSD: 46.666666666669954
+2025-04-01 21:38:56,271 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:56,272 - INFO - Correlation result: 0.6523525395021549
+2025-04-01 21:38:56,272 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:56,273 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:56,273 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:56,274 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:38:57,257 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:57,258 - INFO - Correlation result: 0.6167871895047063
+2025-04-01 21:38:57,258 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:57,259 - INFO - RSI result for EURUSD: 39.532093581283874
+2025-04-01 21:38:57,260 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:57,261 - INFO - RSI result for GBPUSD: 44.12331406551051
+2025-04-01 21:38:57,261 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:57,262 - INFO - Correlation result: 0.9495375488957257
+2025-04-01 21:38:57,262 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:57,263 - INFO - RSI result for EURAUD: 44.393992315752804
+2025-04-01 21:38:57,263 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:57,264 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:57,287 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:57,288 - INFO - Correlation result: 0.24132232598539335
+2025-04-01 21:38:57,288 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:57,289 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:57,289 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:57,290 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:38:57,291 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:57,291 - INFO - Correlation result: 0.6524053828583983
+2025-04-01 21:38:57,292 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:57,293 - INFO - RSI result for EURUSD: 43.548387096768415
+2025-04-01 21:38:57,293 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:57,294 - INFO - RSI result for NZDUSD: 55.07246376810592
+2025-04-01 21:38:58,268 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:58,269 - INFO - Correlation result: 0.6166844511691326
+2025-04-01 21:38:58,269 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:58,271 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:38:58,271 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:58,272 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:38:58,273 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:58,273 - INFO - Correlation result: 0.94954193609852
+2025-04-01 21:38:58,274 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:58,275 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:38:58,275 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:58,276 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:58,299 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:58,300 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:38:58,300 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:58,301 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:38:58,301 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:58,302 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:38:58,302 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:58,303 - INFO - Correlation result: 0.6506272594082999
+2025-04-01 21:38:58,303 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:58,304 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:38:58,304 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:58,305 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:38:58,446 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:58,446 - INFO - WebSocket disconnected for strategy 1
+2025-04-01 21:38:58,447 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:58,447 - INFO - WebSocket disconnected for strategy 2
+2025-04-01 21:38:58,447 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:58,448 - INFO - WebSocket disconnected for strategy 3
+2025-04-01 21:38:58,448 - ERROR - WebSocket error: (<CloseCode.NO_STATUS_RCVD: 1005>, '')
+2025-04-01 21:38:58,448 - INFO - WebSocket disconnected for strategy 4
+2025-04-01 21:38:59,281 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:59,282 - INFO - Correlation result: 0.6166844511691326
+2025-04-01 21:38:59,282 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:59,284 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:38:59,284 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:59,285 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:38:59,285 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:38:59,286 - INFO - Correlation result: 0.94954193609852
+2025-04-01 21:38:59,286 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:59,287 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:38:59,287 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:38:59,288 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:38:59,312 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:38:59,313 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:38:59,314 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:59,315 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:38:59,315 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:59,316 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:38:59,316 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:38:59,317 - INFO - Correlation result: 0.6506272594082999
+2025-04-01 21:38:59,317 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:59,318 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:38:59,318 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:38:59,319 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:39:00,291 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:00,292 - INFO - Correlation result: 0.6166844511691326
+2025-04-01 21:39:00,292 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:00,293 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:00,294 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:00,295 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:00,295 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:00,296 - INFO - Correlation result: 0.94954193609852
+2025-04-01 21:39:00,296 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:00,297 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:39:00,297 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:00,298 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:00,322 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:00,323 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:39:00,324 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:00,325 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:00,325 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:00,326 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:39:00,326 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:00,327 - INFO - Correlation result: 0.6506272594082999
+2025-04-01 21:39:00,327 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:00,328 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:00,328 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:00,329 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:39:01,301 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:01,302 - INFO - Correlation result: 0.6166844511691326
+2025-04-01 21:39:01,302 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:01,303 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:01,303 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:01,304 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:01,305 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:01,305 - INFO - Correlation result: 0.94954193609852
+2025-04-01 21:39:01,306 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:01,307 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:39:01,307 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:01,308 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:01,332 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:01,333 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:39:01,333 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:01,334 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:01,334 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:01,335 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:39:01,336 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:01,336 - INFO - Correlation result: 0.6506272594082999
+2025-04-01 21:39:01,337 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:01,338 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:01,338 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:01,339 - INFO - RSI result for NZDUSD: 55.88235294117119
+2025-04-01 21:39:02,307 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:02,308 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:02,308 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:02,310 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:02,310 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:02,311 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:02,311 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:02,312 - INFO - Correlation result: 0.94954193609852
+2025-04-01 21:39:02,312 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:02,313 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:39:02,313 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:02,314 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:02,338 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:02,339 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:39:02,339 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:02,340 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:02,340 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:02,341 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:39:02,342 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:02,342 - INFO - Correlation result: 0.6938870268675112
+2025-04-01 21:39:02,342 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:02,343 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:02,344 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:02,345 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:03,317 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:03,318 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:03,318 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:03,319 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:03,319 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:03,320 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:03,321 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:03,322 - INFO - Correlation result: 0.9495379484056827
+2025-04-01 21:39:03,322 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:03,323 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:39:03,323 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:03,324 - INFO - RSI result for GBPAUD: 49.47754871505195
+2025-04-01 21:39:03,348 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:03,349 - INFO - Correlation result: 0.23303918580365138
+2025-04-01 21:39:03,349 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:03,350 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:03,350 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:03,351 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:39:03,351 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:03,352 - INFO - Correlation result: 0.6938870268675112
+2025-04-01 21:39:03,352 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:03,353 - INFO - RSI result for EURUSD: 44.99999999998704
+2025-04-01 21:39:03,354 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:03,355 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:04,091 - INFO - WebSocket connection accepted for strategy 1
+2025-04-01 21:39:04,106 - INFO - WebSocket connection accepted for strategy 2
+2025-04-01 21:39:04,121 - INFO - WebSocket connection accepted for strategy 3
+2025-04-01 21:39:04,137 - INFO - WebSocket connection accepted for strategy 4
+2025-04-01 21:39:04,334 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:04,335 - INFO - Correlation result: 0.6166563032779016
+2025-04-01 21:39:04,336 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:04,337 - INFO - RSI result for EURUSD: 39.6407185628743
+2025-04-01 21:39:04,337 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:04,338 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:04,339 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:04,339 - INFO - Correlation result: 0.9495379484056827
+2025-04-01 21:39:04,340 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:04,341 - INFO - RSI result for EURAUD: 44.40950384346596
+2025-04-01 21:39:04,341 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:04,342 - INFO - RSI result for GBPAUD: 49.47754871505195
+2025-04-01 21:39:04,365 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:04,366 - INFO - Correlation result: 0.10402846947919796
+2025-04-01 21:39:04,366 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:04,367 - INFO - RSI result for EURUSD: 49.12280701753839
+2025-04-01 21:39:04,367 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:04,368 - INFO - RSI result for AUDUSD: 47.72727272727101
+2025-04-01 21:39:04,369 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:04,369 - INFO - Correlation result: 0.6169768865239272
+2025-04-01 21:39:04,369 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:04,370 - INFO - RSI result for EURUSD: 49.12280701753839
+2025-04-01 21:39:04,371 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:04,372 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:05,351 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:05,352 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:05,352 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:05,354 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:05,354 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:05,355 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:05,355 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:05,356 - INFO - Correlation result: 0.9495505953024829
+2025-04-01 21:39:05,356 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:05,357 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:05,357 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:05,358 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:05,382 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:05,383 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:05,383 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:05,384 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:05,384 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:05,385 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:05,386 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:05,386 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:05,386 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:05,387 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:05,388 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:05,388 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:06,368 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:06,369 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:06,369 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:06,371 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:06,371 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:06,372 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:06,372 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:06,373 - INFO - Correlation result: 0.9495505953024829
+2025-04-01 21:39:06,373 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:06,374 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:06,374 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:06,375 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:06,399 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:06,399 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:06,400 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:06,401 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:06,401 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:06,402 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:06,402 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:06,403 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:06,403 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:06,404 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:06,405 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:06,406 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:07,383 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:07,384 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:07,384 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:07,385 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:07,386 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:07,387 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:07,387 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:07,388 - INFO - Correlation result: 0.9495544578949031
+2025-04-01 21:39:07,388 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:07,389 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:07,389 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:07,390 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:39:07,400 - INFO - WebSocket connection accepted for strategy 1
+2025-04-01 21:39:07,408 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:07,409 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:07,409 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:07,410 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:07,410 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:07,411 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:07,411 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:07,412 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:07,412 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:07,413 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:07,413 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:07,414 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:07,416 - INFO - WebSocket connection accepted for strategy 2
+2025-04-01 21:39:07,432 - INFO - WebSocket connection accepted for strategy 3
+2025-04-01 21:39:07,448 - INFO - WebSocket connection accepted for strategy 4
+2025-04-01 21:39:08,395 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:08,397 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:08,397 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:08,398 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:08,398 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:08,399 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:08,400 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:08,400 - INFO - Correlation result: 0.9495544578949031
+2025-04-01 21:39:08,401 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:08,402 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:08,402 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:08,403 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:39:08,421 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:08,422 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:08,422 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:08,424 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:08,424 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:08,425 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:08,425 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:08,426 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:08,426 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:08,427 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:08,427 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:08,428 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:09,411 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:09,412 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:09,413 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:09,414 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:09,414 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:09,415 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:09,416 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:09,416 - INFO - Correlation result: 0.9495544578949031
+2025-04-01 21:39:09,417 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:09,418 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:09,418 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:09,419 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:39:09,427 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:09,428 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:09,428 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:09,429 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:09,429 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:09,430 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:09,430 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:09,431 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:09,431 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:09,432 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:09,432 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:09,433 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:10,426 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:10,427 - INFO - Correlation result: 0.6166993812204291
+2025-04-01 21:39:10,427 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:10,429 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:10,429 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:10,430 - INFO - RSI result for GBPUSD: 44.230769230769255
+2025-04-01 21:39:10,430 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:10,431 - INFO - Correlation result: 0.9495544578949031
+2025-04-01 21:39:10,431 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:10,432 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:10,432 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:10,433 - INFO - RSI result for GBPAUD: 49.4489968917775
+2025-04-01 21:39:10,434 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:10,435 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:10,435 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:10,436 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:10,436 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:10,437 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:10,437 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:10,438 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:10,438 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:10,439 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:10,439 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:10,440 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:11,445 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:11,447 - INFO - Correlation result: 0.6166993812204291
+2025-04-01 21:39:11,447 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:11,448 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:11,448 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:11,449 - INFO - RSI result for GBPUSD: 44.230769230769255
+2025-04-01 21:39:11,450 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:11,451 - INFO - Correlation result: 0.9495505953024829
+2025-04-01 21:39:11,451 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:11,452 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:11,452 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:11,453 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:11,454 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:11,454 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:11,454 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:11,455 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:11,456 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:11,457 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:11,457 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:11,458 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:11,458 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:11,459 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:11,459 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:11,460 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:12,461 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:12,462 - INFO - Correlation result: 0.6166691936527842
+2025-04-01 21:39:12,462 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:12,463 - INFO - RSI result for EURUSD: 39.60455362492491
+2025-04-01 21:39:12,463 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:12,464 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:12,465 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:12,466 - INFO - Correlation result: 0.9495505953024829
+2025-04-01 21:39:12,466 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:12,467 - INFO - RSI result for EURAUD: 44.440559440559504
+2025-04-01 21:39:12,467 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:12,468 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:12,469 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:12,469 - INFO - Correlation result: 0.21096443810617135
+2025-04-01 21:39:12,470 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:12,471 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:12,471 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:12,472 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:12,472 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:12,473 - INFO - Correlation result: 0.6180050041686618
+2025-04-01 21:39:12,473 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:12,474 - INFO - RSI result for EURUSD: 48.21428571427438
+2025-04-01 21:39:12,474 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:12,475 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:13,466 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:13,467 - INFO - Correlation result: 0.6166430515907467
+2025-04-01 21:39:13,467 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:13,469 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:13,469 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:13,470 - INFO - RSI result for GBPUSD: 44.28434197886685
+2025-04-01 21:39:13,470 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:13,471 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:13,471 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:13,472 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:13,472 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:13,473 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:13,474 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:13,475 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:13,475 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:13,476 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:13,476 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:13,477 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:13,478 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:13,478 - INFO - Correlation result: 0.6158094731040082
+2025-04-01 21:39:13,478 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:13,479 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:13,480 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:13,480 - INFO - RSI result for NZDUSD: 58.208955223872934
+2025-04-01 21:39:14,475 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:14,476 - INFO - Correlation result: 0.6166845091562881
+2025-04-01 21:39:14,476 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:14,478 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:14,478 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:14,479 - INFO - RSI result for GBPUSD: 44.20394420394405
+2025-04-01 21:39:14,480 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:14,480 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:14,481 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:14,482 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:14,482 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:14,483 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:14,483 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:14,484 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:14,484 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:14,485 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:14,485 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:14,486 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:14,487 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:14,487 - INFO - Correlation result: 0.6164317330432423
+2025-04-01 21:39:14,488 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:14,489 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:14,489 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:14,490 - INFO - RSI result for NZDUSD: 59.420289855065704
+2025-04-01 21:39:15,490 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:15,491 - INFO - Correlation result: 0.6166571980341107
+2025-04-01 21:39:15,491 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:15,492 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:15,492 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:15,493 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:15,494 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:15,495 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:15,495 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:15,496 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:15,496 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:15,497 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:15,498 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:15,498 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:15,499 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:15,500 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:15,500 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:15,501 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:15,501 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:15,502 - INFO - Correlation result: 0.6164317330432423
+2025-04-01 21:39:15,502 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:15,503 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:15,503 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:15,504 - INFO - RSI result for NZDUSD: 59.420289855065704
+2025-04-01 21:39:16,503 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:16,504 - INFO - Correlation result: 0.6166571980341107
+2025-04-01 21:39:16,504 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:16,505 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:16,505 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:16,506 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:16,507 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:16,508 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:16,508 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:16,509 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:16,509 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:16,510 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:16,510 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:16,511 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:16,511 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:16,512 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:16,512 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:16,513 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:16,514 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:16,515 - INFO - Correlation result: 0.6166783911380644
+2025-04-01 21:39:16,515 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:16,516 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:16,516 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:16,517 - INFO - RSI result for NZDUSD: 59.99999999999683
+2025-04-01 21:39:17,516 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:17,517 - INFO - Correlation result: 0.6166571980341107
+2025-04-01 21:39:17,518 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:17,519 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:17,519 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:17,520 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:17,521 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:17,522 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:17,522 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:17,523 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:17,523 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:17,524 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:17,524 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:17,525 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:17,525 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:17,526 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:17,526 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:17,527 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:17,528 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:17,528 - INFO - Correlation result: 0.6166783911380644
+2025-04-01 21:39:17,529 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:17,530 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:17,530 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:17,531 - INFO - RSI result for NZDUSD: 59.99999999999683
+2025-04-01 21:39:18,522 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:18,524 - INFO - Correlation result: 0.6166571980341107
+2025-04-01 21:39:18,524 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:18,525 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:18,525 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:18,526 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:18,527 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:18,528 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:18,528 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:18,529 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:18,529 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:18,530 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:18,530 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:18,531 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:18,531 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:18,532 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:18,532 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:18,533 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:18,534 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:18,534 - INFO - Correlation result: 0.6166783911380644
+2025-04-01 21:39:18,535 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:18,536 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:18,536 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:18,537 - INFO - RSI result for NZDUSD: 59.99999999999683
+2025-04-01 21:39:19,535 - INFO - Calculating correlation between EURUSD and GBPUSD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:19,536 - INFO - Correlation result: 0.6166571980341107
+2025-04-01 21:39:19,537 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:19,538 - INFO - RSI result for EURUSD: 39.67684021544014
+2025-04-01 21:39:19,538 - INFO - Calculating RSI for GBPUSD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:19,539 - INFO - RSI result for GBPUSD: 44.2575684766941
+2025-04-01 21:39:19,540 - INFO - Calculating correlation between EURAUD and GBPAUD - Window: 34, Timeframe: 240 minutes
+2025-04-01 21:39:19,541 - INFO - Correlation result: 0.9495591009211982
+2025-04-01 21:39:19,541 - INFO - Calculating RSI for EURAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:19,542 - INFO - RSI result for EURAUD: 44.47165850244953
+2025-04-01 21:39:19,542 - INFO - Calculating RSI for GBPAUD - Period: 14, Timeframe: 240 minutes
+2025-04-01 21:39:19,543 - INFO - RSI result for GBPAUD: 49.4632768361578
+2025-04-01 21:39:19,543 - INFO - Calculating correlation between EURUSD and AUDUSD - Window: 27, Timeframe: 1 minutes
+2025-04-01 21:39:19,544 - INFO - Correlation result: 0.21058339110765634
+2025-04-01 21:39:19,544 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:19,545 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:19,545 - INFO - Calculating RSI for AUDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:19,546 - INFO - RSI result for AUDUSD: 53.48837209301905
+2025-04-01 21:39:19,547 - INFO - Calculating correlation between EURUSD and NZDUSD - Window: 48, Timeframe: 1 minutes
+2025-04-01 21:39:19,548 - INFO - Correlation result: 0.6166783911380644
+2025-04-01 21:39:19,548 - INFO - Calculating RSI for EURUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:19,549 - INFO - RSI result for EURUSD: 50.0
+2025-04-01 21:39:19,549 - INFO - Calculating RSI for NZDUSD - Period: 14, Timeframe: 1 minutes
+2025-04-01 21:39:19,550 - INFO - RSI result for NZDUSD: 59.99999999999683
+2025-04-01 21:39:20,108 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,108 - INFO - WebSocket disconnected for strategy 2
+2025-04-01 21:39:20,109 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,109 - INFO - WebSocket disconnected for strategy 2
+2025-04-01 21:39:20,110 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,110 - INFO - WebSocket disconnected for strategy 1
+2025-04-01 21:39:20,110 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,111 - INFO - WebSocket disconnected for strategy 4
+2025-04-01 21:39:20,111 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,111 - INFO - WebSocket disconnected for strategy 3
+2025-04-01 21:39:20,111 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,111 - INFO - WebSocket disconnected for strategy 1
+2025-04-01 21:39:20,111 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,111 - INFO - WebSocket disconnected for strategy 4
+2025-04-01 21:39:20,112 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,112 - INFO - Stopped indicator calculation for strategy 2
+2025-04-01 21:39:20,112 - INFO - WebSocket disconnected for strategy 2
+2025-04-01 21:39:20,112 - INFO - Calculation cancelled for strategy 2
+2025-04-01 21:39:20,112 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,113 - INFO - WebSocket disconnected for strategy 3
+2025-04-01 21:39:20,113 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,113 - INFO - Stopped indicator calculation for strategy 1
+2025-04-01 21:39:20,113 - INFO - WebSocket disconnected for strategy 1
+2025-04-01 21:39:20,113 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,114 - INFO - Stopped indicator calculation for strategy 4
+2025-04-01 21:39:20,114 - INFO - WebSocket disconnected for strategy 4
+2025-04-01 21:39:20,114 - ERROR - WebSocket error: (1001, '')
+2025-04-01 21:39:20,114 - INFO - Stopped indicator calculation for strategy 3
+2025-04-01 21:39:20,114 - INFO - WebSocket disconnected for strategy 3
+2025-04-01 21:39:20,114 - INFO - Calculation cancelled for strategy 1
+2025-04-01 21:39:20,115 - INFO - Calculation cancelled for strategy 4
+2025-04-01 21:39:20,115 - INFO - Calculation cancelled for strategy 3
