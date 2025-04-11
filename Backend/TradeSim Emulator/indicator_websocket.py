@@ -15,15 +15,6 @@ import sys
 from pydantic import BaseModel
 from indicator_utils import calculate_rsi, calculate_correlation, get_tick_data
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler('indicator_websocket.log')
-    ]
-)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()

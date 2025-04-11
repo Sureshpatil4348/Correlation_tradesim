@@ -96,9 +96,15 @@ const Analytics = () => {
                 body: JSON.stringify({...strategyToBackTest, startDate: startDate, endDate: endDate})
             });
             const responseData = await response.json();
-            setBacktestData(responseData);
-            setIsLoading(false);
-            setReportData(true);
+            if (!responseData.error) {
+                setBacktestData(responseData);
+                setIsLoading(false);
+                setReportData(true);
+            } else {
+                setIsLoading(false);
+                setReportData(false);
+                alert(responseData.error);
+            }
         }
         fetchBacktestData();
     }

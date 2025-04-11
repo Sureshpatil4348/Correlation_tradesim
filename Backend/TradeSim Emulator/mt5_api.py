@@ -20,8 +20,6 @@ import io
 import base64
 from fastapi.responses import StreamingResponse
 from typing import Dict, List, Tuple, Optional, Union
-import os
-import csv
 from io import BytesIO
 from typing import Optional
 import logging
@@ -29,15 +27,6 @@ from functools import lru_cache
 from collections import defaultdict
 from indicator_utils import calculate_rsi, calculate_correlation, get_tick_data
 
-# Configure logging at the top of the file
-logging.basicConfig(
-    level=logging.WARNING,  # Changed from INFO to WARNING
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('mt5_api.log')
-    ]
-)
 logger = logging.getLogger(__name__)
 
 # Initialize rate limiter
@@ -312,150 +301,8 @@ def get_user_login_status():
         "equity": account_info.equity
     }
 
-def check_and_execute_strategy(strategy_id, params):
-    magic_number = int(params["magicNumber"])
-    
-    try:
-        print(f"\nInitializing strategy {strategy_id}")
-        print(f"Current active strategies: {list(active_strategies.keys())}")
-        
-        # Initialize monitoring variables
-        monitored_trades = {}
-        last_trade_time = None
-        cooldown_period = timedelta(hours=float(params.get("cooldownPeriod", 24)))
-
-        while True:
-            # Check strategy status first
-            if strategy_id not in active_strategies:
-                print(f"Strategy {strategy_id} not in active strategies, stopping")
-                break
-                
-            if not active_strategies.get(strategy_id):
-                print(f"Strategy {strategy_id} marked as inactive, stopping")
-                break
-
-            try:
-                # First check if MT5 is initialized
-                if not mt5.initialize():
-                    print("Failed to initialize MT5")
-                    break
-                
-                # Check for existing trades immediately and add to monitored_trades
-                existing_trades = mt5.positions_get(magic=magic_number)
-                if existing_trades:
-                    print(f"Found {len(existing_trades)} existing trades for strategy {strategy_id}:")
-                    for trade in existing_trades:
-                        monitored_trades[trade.ticket] = {
-                            'symbol': trade.symbol,
-                            'type': trade.type,
-                            'volume': trade.volume,
-                            'open_price': trade.price_open,
-                            'open_time': datetime.fromtimestamp(trade.time),
-                            'magic': trade.magic,
-                            'ticket': trade.ticket
-                        }
-                        print(f"Added to monitoring - Trade {trade.ticket}: {trade.symbol} {trade.volume} lots")
-
-                print(f"Starting strategy {strategy_id} monitoring loop")
-
-                while active_strategies.get(strategy_id, False):
-                    try:
-                        # Update monitored trades list
-                        current_trades = mt5.positions_get(magic=magic_number)
-                        if current_trades is None:
-                            print("Error getting positions, retrying...")
-                            time.sleep(1)
-                            continue
-
-                        # Clean up monitored trades (remove closed positions)
-                        current_tickets = set(trade.ticket for trade in current_trades)
-                        monitored_trades = {ticket: trade for ticket, trade in monitored_trades.items() 
-                                          if ticket in current_tickets}
-
-                        # Check exit conditions for monitored trades
-                        pair1, pair2 = params["currencyPairs"]
-                        correlation = calculate_correlation(pair1, pair2, int(params["correlationWindow"]))
-                        
-                        if correlation is not None:
-                            print(f"\nChecking conditions - Correlation: {correlation:.3f}")
-                            
-                            # Check exit conditions for each monitored trade
-                            for ticket, trade_info in list(monitored_trades.items()):
-                                position = mt5.positions_get(ticket=ticket)
-                                if position:
-                                    position = position[0]
-                                    if correlation > float(params["exitThreshold"]) and position.profit > 0:
-                                        print(f"Exit conditions met for trade {ticket}")
-                                        if close_position(ticket):
-                                            print(f"Closed profitable trade {ticket}")
-                                            monitored_trades.pop(ticket)
-
-                        # Check for new trade entries only if no active trades
-                        if len(monitored_trades) == 0 and (
-                            last_trade_time is None or 
-                            datetime.now() - last_trade_time > cooldown_period
-                        ):
-                            if correlation < float(params["entryThreshold"]):
-                                rsi1 = calculate_rsi(pair1, int(params["rsiPeriod"]))
-                                rsi2 = calculate_rsi(pair2, int(params["rsiPeriod"]))
-                                
-                                if rsi1 is not None and rsi2 is not None:
-                                    print(f"Entry Check - RSI1: {rsi1:.2f}, RSI2: {rsi2:.2f}")
-                                    
-                                    if (rsi1 > params["rsiOverbought"] and rsi2 < params["rsiOversold"]):
-                                        if place_paired_trades(pair1, pair2, params):
-                                            last_trade_time = datetime.now()
-                                            # New trades will be added to monitored_trades in next loop iteration
-                                    elif (rsi1 < params["rsiOversold"] and rsi2 > params["rsiOverbought"]):
-                                        if place_paired_trades(pair2, pair1, params):
-                                            last_trade_time = datetime.now()
-                                            # New trades will be added to monitored_trades in next loop iteration
-
-                        # Print monitoring status
-                        if monitored_trades:
-                            print(f"\nCurrently monitoring {len(monitored_trades)} trades:")
-                            for ticket, trade in monitored_trades.items():
-                                position = mt5.positions_get(ticket=ticket)
-                                if position:
-                                    position = position[0]
-                                    print(f"Ticket {ticket}: {trade['symbol']} - Profit: ${position.profit:.2f}")
-
-                    except Exception as e:
-                        print(f"Error in monitoring loop: {e}")
-                        if not active_strategies.get(strategy_id, False):
-                            print(f"Strategy {strategy_id} stop signal received during error handling")
-                            break
-                        time.sleep(1)
-                        continue
-
-                    time.sleep(1)
-
-                print(f"Strategy {strategy_id} monitoring stopped")
-                
-            except Exception as e:
-                print(f"Error in strategy execution: {e}")
-                if not active_strategies.get(strategy_id):
-                    print(f"Strategy {strategy_id} stop signal received during error handling")
-                    break
-                time.sleep(1)
-                continue
-
-    except Exception as e:
-        print(f"Fatal error in strategy execution: {e}")
-    finally:
-        try:
-            if strategy_id in active_strategies:
-                print(f"Cleaning up strategy {strategy_id}")
-                active_strategies[strategy_id] = False
-                active_strategies.pop(strategy_id, None)
-        except Exception as e:
-            print(f"Error during strategy cleanup: {e}")
-        
-        print(f"Strategy {strategy_id} execution ended")
-        print(f"Remaining active strategies: {list(active_strategies.keys())}")
-
 # Function to place a trade
-def place_trade(symbol, lot, order_type, magic_number):
+def place_trade(symbol, lot, order_type, magic_number, comment=None):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
         logger.error(f"Failed to get tick data for {symbol}")
@@ -481,7 +328,7 @@ def place_trade(symbol, lot, order_type, magic_number):
         "price": price,
         "magic": magic_number,
         "deviation": 10,
-        "comment": "Auto-Trader",
+        "comment": comment if comment else "Auto-Trader",
         "type_time": mt5.ORDER_TIME_GTC
     }
     
@@ -601,6 +448,10 @@ class PairedTradingBacktester:
         
         # Align all series to have the same index
         common_index = rolling_corr.dropna().index.intersection(pair1_rsi.dropna().index).intersection(pair2_rsi.dropna().index)
+        
+        if len(common_index) == 0:
+            raise ValueError(f"No common data points after indicator calculation. Try using a smaller window size than {self.correlation_window} or extending your date range.")
+        
         rolling_corr = rolling_corr.loc[common_index]
         pair1_rsi = pair1_rsi.loc[common_index]
         pair2_rsi = pair2_rsi.loc[common_index]
@@ -686,7 +537,7 @@ class PairedTradingBacktester:
             sharpe_ratio = 0.0
         
         # Calculate profit factor
-        profit_factor = total_profit / abs(total_loss) if total_loss != 0 else float('inf')
+        profit_factor = total_profit / abs(total_loss) if total_loss != 0 else 999999.0  # Use a large number instead of infinity
         
         return {
             'total_trades': total_trades,
@@ -716,10 +567,15 @@ class PairedTradingBacktester:
         return rsi
     
     def run_backtest(self) -> Dict[str, Union[List[Dict], Dict[str, float]]]:
-        """
-        Run the backtest and return results.
-        """
-        index = self.indicators['rolling_correlation'].index
+        # Get the correct length to iterate over
+        indicators_length = min(
+            len(self.indicators['rolling_correlation']),
+            len(self.indicators[f'{self.pair1}_rsi']),
+            len(self.indicators[f'{self.pair2}_rsi'])
+        )
+        
+        # Use this length rather than just one indicator's length
+        index = self.indicators['rolling_correlation'].index[:indicators_length]
         print(f"Total periods to analyze: {len(index)}")
 
         for i in range(len(index)):
@@ -748,6 +604,16 @@ class PairedTradingBacktester:
         }
 
     def _check_entry_conditions(self, i: int) -> Tuple[bool, Optional[Dict[str, str]]]:
+        # Make sure i is valid for all indicators
+        indicators_length = min(
+            len(self.indicators['rolling_correlation']),
+            len(self.indicators[f'{self.pair1}_rsi']),
+            len(self.indicators[f'{self.pair2}_rsi'])
+        )
+        
+        if i >= indicators_length:
+            return False, None
+        
         current_time = self.indicators['rolling_correlation'].index[i]
         rolling_corr = self.indicators['rolling_correlation'].iloc[i]
         pair1_rsi = self.indicators[f'{self.pair1}_rsi'].iloc[i]
@@ -1311,10 +1177,8 @@ async def stop_strategy(params: dict):
                 "message": "Strategy monitor not found"
             }
 
-        # Stop the strategy and close trades
-        result = await monitor.stop()
+        result = await monitor.stop(close_trades=True)
         
-        # Clean up strategy
         active_strategies[strategy_id] = False
         active_strategies.pop(strategy_id, None)
         strategy_monitors.pop(strategy_id, None)
@@ -1336,7 +1200,7 @@ async def stop_strategy_internal(strategy_id: str):
 
     monitor = strategy_monitors.get(strategy_id)
     if monitor:
-        result = await monitor.stop()
+        result = await monitor.stop(close_trades=False)
         active_strategies[strategy_id] = False
         active_strategies.pop(strategy_id)
         strategy_monitors.pop(strategy_id)
@@ -1396,23 +1260,6 @@ def close_position(ticket):
     result = mt5.order_send(request)
     return result.retcode == mt5.TRADE_RETCODE_DONE
 
-def place_paired_trades(long_pair, short_pair, params):
-    """Place a pair of trades (one long, one short)."""
-    magic_number = int(params["magicNumber"])
-    lot_sizes = [float(size) for size in params["lotSize"]]
-    
-    long_result = place_trade(long_pair, lot_sizes[0], mt5.ORDER_TYPE_BUY, magic_number)
-    if not long_result:
-        return False
-        
-    short_result = place_trade(short_pair, lot_sizes[1], mt5.ORDER_TYPE_SELL, magic_number)
-    if not short_result:
-        # Close the long position if short fails
-        close_position(long_result.order)
-        return False
-    
-    return True
-
 class StrategyMonitor:
     def __init__(self, strategy_id, params):
         self.strategy_id = strategy_id
@@ -1422,18 +1269,14 @@ class StrategyMonitor:
         self.last_trade_time = None
         self.cooldown_period = timedelta(hours=float(params.get("cooldownPeriod", 24)))
         self.magic_number = int(params["magicNumber"])
-        
-        # Map timeframe to MT5 constant and store both numeric and MT5 timeframe
         self.timeframe = int(params["timeFrame"])  # Store numeric timeframe
         
-        # Remove the timeframe mapping from here since it's now handled in indicator_utils.py
         
     async def initialize(self):
         """Initialize strategy monitoring and load existing trades"""
         if not mt5.initialize():
             raise Exception("Failed to initialize MT5")
 
-        # Load existing trades
         existing_trades = mt5.positions_get(magic=self.magic_number)
         if existing_trades:
             print(f"\nFound {len(existing_trades)} existing trades for strategy {self.strategy_id}")
@@ -1475,13 +1318,20 @@ class StrategyMonitor:
         pair1, pair2 = self.params["currencyPairs"]
         correlation = calculate_correlation(pair1, pair2, int(self.params["correlationWindow"]), self.timeframe)
 
-        if correlation is None:
+        if correlation is None or correlation <= float(self.params["exitThreshold"]):
             return
+        
+        pair1_trade = next((t for t in self.monitored_trades if t.symbol == pair1), None)
+        pair2_trade = next((t for t in self.monitored_trades if t.symbol == pair2), None)
 
-        if self.is_stopping or correlation > float(self.params["exitThreshold"]):
-            for position in self.monitored_trades:
-                if position.profit > 0:
-                    await self._close_position(position)
+        if pair1_trade and pair2_trade:
+            total_profit = pair1_trade.profit + pair2_trade.profit
+            if total_profit > 0:
+                print(f"Exiting both trades: Correlation = {correlation:.3f}, Total Profit = ${total_profit:.2f}")
+                await self._close_position(pair1_trade)
+                await self._close_position(pair2_trade)
+            else:
+                print(f"Holding trades: Correlation high but pair not profitable (${total_profit:.2f})")
 
     async def _check_entry_conditions(self):
         """Check and handle entry conditions for new trades"""
@@ -1493,7 +1343,6 @@ class StrategyMonitor:
             return
 
         pair1, pair2 = self.params["currencyPairs"]
-        # Pass the timeframe parameter here
         correlation = calculate_correlation(
             pair1, 
             pair2, 
@@ -1504,7 +1353,6 @@ class StrategyMonitor:
         if correlation is None or correlation >= float(self.params["entryThreshold"]):
             return
 
-        # Pass the timeframe parameter here too
         rsi1 = calculate_rsi(
             pair1, 
             int(self.params["rsiPeriod"]),
@@ -1519,38 +1367,30 @@ class StrategyMonitor:
         if rsi1 is None or rsi2 is None:
             return
 
-        # Check RSI conditions and determine trade direction
         if self._check_rsi_conditions(rsi1, rsi2):
-            # Determine trade direction based on RSI values
             if rsi1 > float(self.params["rsiOverbought"]) and rsi2 < float(self.params["rsiOversold"]):
-                # Short pair1, Long pair2
-                if await self._place_trades(pair1, pair2, is_first_pair_long=False):
+                if await self._place_trades(pair1, pair2, is_first_pair_long=False, comment=self.params["tradeComment"]):
                     self.last_trade_time = datetime.now()
             else:
-                # Long pair1, Short pair2
-                if await self._place_trades(pair1, pair2, is_first_pair_long=True):
+                if await self._place_trades(pair1, pair2, is_first_pair_long=True, comment=self.params["tradeComment"]):
                     self.last_trade_time = datetime.now()
 
-    async def _place_trades(self, pair1, pair2, is_first_pair_long=True):
+    async def _place_trades(self, pair1, pair2, is_first_pair_long=True, comment=None):
         """Place a pair of trades based on the direction"""
         try:
             lot1 = float(self.params["lotSize"][0])
             lot2 = float(self.params["lotSize"][1])
 
-            # Determine order types based on direction
             type1 = mt5.ORDER_TYPE_BUY if is_first_pair_long else mt5.ORDER_TYPE_SELL
             type2 = mt5.ORDER_TYPE_SELL if is_first_pair_long else mt5.ORDER_TYPE_BUY
 
-            # Place first trade
-            result1 = place_trade(pair1, lot1, type1, self.magic_number)
+            result1 = place_trade(pair1, lot1, type1, self.magic_number, comment)
             if not result1:
                 print(f"Failed to place trade for {pair1}")
                 return False
 
-            # Place second trade
-            result2 = place_trade(pair2, lot2, type2, self.magic_number)
+            result2 = place_trade(pair2, lot2, type2, self.magic_number, comment)
             if not result2:
-                # If second trade fails, close the first trade
                 print(f"Failed to place trade for {pair2}, closing {pair1} trade")
                 close_position(result1.order)
                 return False
@@ -1573,14 +1413,11 @@ class StrategyMonitor:
             if rsi1 is None or rsi2 is None:
                 return False
 
-            # Check for overbought/oversold conditions
             overbought = float(self.params["rsiOverbought"])
             oversold = float(self.params["rsiOversold"])
 
-            # Condition 1: First pair overbought, second pair oversold
             condition1 = rsi1 > overbought and rsi2 < oversold
 
-            # Condition 2: First pair oversold, second pair overbought
             condition2 = rsi1 < oversold and rsi2 > overbought
 
             if condition1:
@@ -1600,14 +1437,14 @@ class StrategyMonitor:
             print(f"Error checking RSI conditions: {e}")
             return False
 
-    async def stop(self):
-        """Stop strategy and close all trades"""
+    async def stop(self, close_trades: bool = True):
+        """Stop strategy and close all trades (optional)"""
         print(f"\nStopping strategy {self.strategy_id}")
-        self.is_stopping = True
+        if close_trades:
+            self.is_stopping = True
         closed_trades = 0
         failed_closures = 0
 
-        # Get all active trades for this magic number
         active_trades = mt5.positions_get(magic=self.magic_number)
         if not active_trades:
             print("No active trades found")
@@ -1619,50 +1456,46 @@ class StrategyMonitor:
 
         print(f"Found {len(active_trades)} trades to close")
 
-        for trade in active_trades:
-            try:
-                # Determine closing order type (opposite of current position)
-                close_type = mt5.ORDER_TYPE_BUY if trade.type == mt5.ORDER_TYPE_SELL else mt5.ORDER_TYPE_SELL
-                
-                # Prepare close request
-                close_request = {
-                    "action": mt5.TRADE_ACTION_DEAL,
-                    "symbol": trade.symbol,
-                    "volume": trade.volume,
-                    "type": close_type,
-                    "position": trade.ticket,
-                    "magic": self.magic_number,
-                    "comment": "Strategy Stop Closure",
-                    "type_time": mt5.ORDER_TIME_GTC
-                }
-
-                # Try different filling modes
-                success = False
-                for filling_type in [mt5.ORDER_FILLING_FOK, mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_RETURN]:
-                    close_request["type_filling"] = filling_type
-                    result = mt5.order_send(close_request)
+        if close_trades:
+            for trade in active_trades:
+                try:
+                    close_type = mt5.ORDER_TYPE_BUY if trade.type == mt5.ORDER_TYPE_SELL else mt5.ORDER_TYPE_SELL
                     
-                    if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-                        closed_trades += 1
-                        print(f"Successfully closed trade {trade.ticket} using filling type {filling_type}")
-                        success = True
-                        break
-                    else:
-                        print(f"Failed to close trade {trade.ticket} with filling type {filling_type}: "
-                              f"{result.comment if result else 'No result'}")
+                    close_request = {
+                        "action": mt5.TRADE_ACTION_DEAL,
+                        "symbol": trade.symbol,
+                        "volume": trade.volume,
+                        "type": close_type,
+                        "position": trade.ticket,
+                        "magic": self.magic_number,
+                        "comment": "Strategy Stop Closure",
+                        "type_time": mt5.ORDER_TIME_GTC
+                    }
 
-                if not success:
+                    success = False
+                    for filling_type in [mt5.ORDER_FILLING_FOK, mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_RETURN]:
+                        close_request["type_filling"] = filling_type
+                        result = mt5.order_send(close_request)
+                        
+                        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                            closed_trades += 1
+                            print(f"Successfully closed trade {trade.ticket} using filling type {filling_type}")
+                            success = True
+                            break
+                        else:
+                            print(f"Failed to close trade {trade.ticket} with filling type {filling_type}: "
+                                f"{result.comment if result else 'No result'}")
+
+                    if not success:
+                        failed_closures += 1
+                        print(f"Failed to close trade {trade.ticket} after all attempts")
+
+                    await asyncio.sleep(0.1)
+
+                except Exception as e:
                     failed_closures += 1
-                    print(f"Failed to close trade {trade.ticket} after all attempts")
+                    print(f"Error closing trade {trade.ticket}: {e}")
 
-                # Add small delay between closures to prevent overload
-                await asyncio.sleep(0.1)
-
-            except Exception as e:
-                failed_closures += 1
-                print(f"Error closing trade {trade.ticket}: {e}")
-
-        # Verify final state
         remaining_trades = mt5.positions_get(magic=self.magic_number)
         remaining_count = len(remaining_trades) if remaining_trades else 0
 
@@ -1682,14 +1515,13 @@ class StrategyMonitor:
             "details": status_message
         }
 
+
     async def _print_status(self):
         """Print current monitoring status"""
         try:
-            # Print header with timestamp
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             print(f"\n=== Strategy {self.strategy_id} Status at {current_time} ===")
 
-            # Print active trades status
             if self.monitored_trades:
                 print(f"\nMonitoring {len(self.monitored_trades)} active trades:")
                 for trade in self.monitored_trades:
@@ -1707,9 +1539,7 @@ class StrategyMonitor:
                     except Exception as e:
                         print(f"Error getting position {trade.ticket} details: {e}")
 
-            # Print market conditions
             pair1, pair2 = self.params["currencyPairs"]
-            # Pass the timeframe parameter here
             correlation = calculate_correlation(
                 pair1, 
                 pair2, 
@@ -1723,9 +1553,7 @@ class StrategyMonitor:
             print(f"Entry Threshold: {self.params['entryThreshold']}")
             print(f"Exit Threshold: {self.params['exitThreshold']}")
 
-            # Print RSI values if no active trades
             if not self.monitored_trades:
-                # Pass the timeframe parameter here too
                 rsi1 = calculate_rsi(
                     pair1, 
                     int(self.params["rsiPeriod"]),
@@ -1745,7 +1573,6 @@ class StrategyMonitor:
                 print(f"Overbought Level: {self.params['rsiOverbought']}")
                 print(f"Oversold Level: {self.params['rsiOversold']}")
 
-            # Print cooldown status if applicable
             if self.last_trade_time:
                 time_since_last = datetime.now() - self.last_trade_time
                 cooldown_remaining = self.cooldown_period - time_since_last
@@ -1776,183 +1603,6 @@ class StrategyMonitor:
         except Exception as e:
             logger.error(f"Error closing trade {position.ticket}: {e}")
             return False
-
-    async def execute_trades(self, strategy_id: int, correlation: float, rsi_values: dict, current_prices: dict):
-        """Execute trades with strict validation before any trade placement"""
-        try:
-            strategy = self.active_strategies.get(strategy_id)
-            if not strategy:
-                logger.error(f"Strategy {strategy_id} not found in active strategies")
-                return
-
-            pair1, pair2 = strategy["currencyPairs"]
-            logger.info(f"Starting pre-trade validation for {pair1} and {pair2}")
-
-            # ==== STEP 1: Get tick data for BOTH pairs FIRST ====
-            tick_data = {}
-            for pair in [pair1, pair2]:
-                data = await self.get_tick_data(pair)
-                if not data:
-                    logger.error(f"❌ Missing tick data for {pair}, aborting all trades")
-                    return  # Exit immediately if either tick data is missing
-                tick_data[pair] = data
-                logger.info(f"✓ Got tick data for {pair}")
-
-            logger.info("✓ Successfully validated tick data for both pairs")
-
-            # ==== STEP 2: Verify RSI values ====
-            if not all(key in rsi_values for key in [pair1, pair2]):
-                logger.error("❌ Missing RSI values, aborting all trades")
-                return
-
-            # ==== STEP 3: Get current positions ====
-            positions = {
-                pair1: self.get_position(pair1),
-                pair2: self.get_position(pair2)
-            }
-
-            # ==== STEP 4: Calculate trade conditions ====
-            entry_threshold = float(strategy["entryThreshold"])
-            exit_threshold = float(strategy["exitThreshold"])
-            rsi_overbought = float(strategy["rsiOverbought"])
-            rsi_oversold = float(strategy["rsiOversold"])
-
-            # ==== STEP 5: Determine trade action ====
-            if correlation >= entry_threshold and all(rsi_values[pair] <= rsi_oversold for pair in [pair1, pair2]):
-                logger.info("✓ Entry conditions met for long positions")
-                # Only proceed with trades after ALL validations
-                trades_executed = await self.execute_pair_trades(
-                    pair1, pair2, "BUY", strategy["lotSize"], positions
-                )
-                if not trades_executed:
-                    logger.error("❌ Failed to execute complete pair trades")
-                    return
-
-            elif correlation <= exit_threshold and all(rsi_values[pair] >= rsi_overbought for pair in [pair1, pair2]):
-                logger.info("✓ Entry conditions met for short positions")
-                trades_executed = await self.execute_pair_trades(
-                    pair1, pair2, "SELL", strategy["lotSize"], positions
-                )
-                if not trades_executed:
-                    logger.error("❌ Failed to execute complete pair trades")
-                    return
-
-            # ==== STEP 6: Check exit conditions ====
-            should_exit = (
-                (correlation <= exit_threshold and all(rsi_values[pair] >= rsi_overbought for pair in [pair1, pair2])) or
-                (correlation >= entry_threshold and all(rsi_values[pair] <= rsi_oversold for pair in [pair1, pair2]))
-            )
-
-            if should_exit:
-                logger.info("✓ Exit conditions met for both pairs")
-                await self.close_pair_trades(pair1, pair2, positions)
-
-        except Exception as e:
-            logger.error(f"Error in execute_trades: {e}")
-            logger.exception("Full traceback:")
-
-    async def execute_pair_trades(self, pair1: str, pair2: str, direction: str, lot_size: float, positions: dict) -> bool:
-        """Execute trades for both pairs as a single unit"""
-        logger.info(f"Attempting to execute {direction} trades for both pairs")
-        
-        # Store pairs that were successfully traded
-        executed_pairs = []
-        
-        try:
-            # Check if we can trade both pairs
-            for pair in [pair1, pair2]:
-                if positions.get(pair):
-                    logger.warning(f"Position already exists for {pair}")
-                    return False
-
-            # Try to execute first trade
-            success1 = await self.place_trade(pair1, direction, lot_size)
-            if not success1:
-                logger.error(f"❌ Failed to place trade for {pair1}")
-                return False
-            
-            executed_pairs.append(pair1)
-            logger.info(f"✓ Successfully placed trade for {pair1}")
-
-            # Try to execute second trade
-            success2 = await self.place_trade(pair2, direction, lot_size)
-            if not success2:
-                logger.error(f"❌ Failed to place trade for {pair2}")
-                # Rollback first trade
-                if await self.close_position(pair1):
-                    logger.info(f"✓ Rolled back trade for {pair1}")
-                else:
-                    logger.error(f"❌ Failed to rollback trade for {pair1}")
-                return False
-            
-            executed_pairs.append(pair2)
-            logger.info(f"✓ Successfully placed trade for {pair2}")
-            
-            return True
-
-        except Exception as e:
-            logger.error(f"Error executing pair trades: {e}")
-            # Rollback any executed trades
-            for pair in executed_pairs:
-                if await self.close_position(pair):
-                    logger.info(f"✓ Rolled back trade for {pair}")
-                else:
-                    logger.error(f"❌ Failed to rollback trade for {pair}")
-            return False
-
-    async def close_pair_trades(self, pair1: str, pair2: str, positions: dict):
-        """Close positions for both pairs"""
-        for pair in [pair1, pair2]:
-            if positions.get(pair):
-                if await self.close_position(pair):
-                    logger.info(f"✓ Closed position for {pair}")
-                else:
-                    logger.error(f"❌ Failed to close position for {pair}")
-
-    async def get_tick_data(self, symbol: str) -> Union[Dict, None]:
-        """Get tick data with retries"""
-        max_retries = 3
-        retry_delay = 1
-        
-        for attempt in range(max_retries):
-            try:
-                ticks = mt5.copy_ticks_from(symbol, datetime.now() - timedelta(seconds=10), 
-                                          100, mt5.COPY_TICKS_ALL)
-                if ticks is not None and len(ticks) > 0:
-                    last_tick = ticks[-1]
-                    logger.info(f"Successfully got tick data for {symbol}")
-                    return {
-                        "bid": last_tick.bid,
-                        "ask": last_tick.ask,
-                        "time": last_tick.time
-                    }
-                
-                if attempt < max_retries - 1:
-                    logger.warning(f"No tick data for {symbol}, attempt {attempt + 1}/{max_retries}")
-                    await asyncio.sleep(retry_delay)
-                else:
-                    logger.error(f"Failed to get tick data for {symbol} after {max_retries} attempts")
-                    return None
-                    
-            except Exception as e:
-                logger.error(f"Error getting tick data for {symbol}: {e}")
-                if attempt < max_retries - 1:
-                    await asyncio.sleep(retry_delay)
-                else:
-                    return None
-
-        return None
-
-    async def cleanup_partial_trades(self, pairs: List[str], positions: Dict):
-        """Clean up any positions if we couldn't enter trades for all pairs"""
-        logger.warning("Cleaning up partial trades")
-        for pair in pairs:
-            if positions.get(pair):
-                success = await self.close_position(pair)
-                if success:
-                    logger.info(f"Cleaned up position for {pair}")
-                else:
-                    logger.error(f"Failed to clean up position for {pair}")
 
 @app.post("/mt5/plot-indicators")
 async def plot_indicators(request: IndicatorRequest):

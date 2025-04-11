@@ -5,15 +5,6 @@ import MetaTrader5 as mt5
 import logging
 from indicator_websocket import app as websocket_app
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('indicator_server.log')
-    ]
-)
 logger = logging.getLogger(__name__)
 
 # Create FastAPI app
