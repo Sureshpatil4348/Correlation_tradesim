@@ -1132,7 +1132,7 @@ async def start_strategy(params: dict):
         print(f"Starting strategy {strategy_id}")
 
         if strategy_id in active_strategies:
-            print(f"Stopping existing strategy {strategy_id} for restart")
+            print(f"strategy {strategy_id} is already running, stopping it")
             await stop_strategy_internal(strategy_id)
 
         monitor = StrategyMonitor(strategy_id, params)
@@ -1148,7 +1148,10 @@ async def start_strategy(params: dict):
         return {
             "status": "success",
             "message": f"Strategy {strategy_id} started/restarted",
-            "existing_trades": len(monitor.monitored_trades)
+            "existing_trades": len(monitor.monitored_trades),
+            "activeTrades": len(active_strategies),
+            "activeStrategies": active_strategies,
+            "monitor": monitor
         }
 
     except Exception as e:
@@ -1269,46 +1272,60 @@ class StrategyMonitor:
         self.last_trade_time = None
         self.cooldown_period = timedelta(hours=float(params.get("cooldownPeriod", 24)))
         self.magic_number = int(params["magicNumber"])
-        self.timeframe = int(params["timeFrame"])  # Store numeric timeframe
-        
+        self.timeframe = int(params["timeFrame"])
+        self.trade_lock = asyncio.Lock()  # Lock for trade placement
+        self.placing_trades = False  # Flag to track trade placement status
         
     async def initialize(self):
         """Initialize strategy monitoring and load existing trades"""
         if not mt5.initialize():
             raise Exception("Failed to initialize MT5")
 
-        existing_trades = mt5.positions_get(magic=self.magic_number)
+        # Get all positions and filter manually to be sure
+        all_positions = mt5.positions_get()
+        if all_positions is None:
+            print(f"No active positions found")
+            return
+            
+        print(f"Total active positions in MT5: {len(all_positions)}")
+        
+        # Filter positions by magic number manually
+        existing_trades = []
+        for position in all_positions:
+            if position.magic == self.magic_number:
+                existing_trades.append(position)
+        
         if existing_trades:
-            print(f"\nFound {len(existing_trades)} existing trades for strategy {self.strategy_id}")
+            print(f"\nFound {len(existing_trades)} existing trades for strategy {self.strategy_id} with magic number {self.magic_number}")
+            
+            # Find the most recent trade by comparing open times
+            latest_trade_time = None
             for trade in existing_trades:
                 self.monitored_trades.append(trade)
-                print(f"Loaded existing trade: {trade.symbol} {trade.volume} lots")
-
-    async def monitor_trades(self):
-        """Main trade monitoring loop"""
-        while active_strategies.get(self.strategy_id) and not self.is_stopping:
-            try:
-                await self._update_monitored_trades()
-                await self._check_exit_conditions()
-                await self._check_entry_conditions()
-                await self._print_status()
-            except Exception as e:
-                print(f"Error in monitoring loop: {e}")
-                if not active_strategies.get(self.strategy_id):
-                    break
-            await asyncio.sleep(1)
-
-    async def _update_monitored_trades(self):
-        """Update status of monitored trades"""
-        current_trades = mt5.positions_get(magic=self.magic_number)
-        if current_trades is None:
-            return
-
-        # Update monitored trades
-        current_tickets = set(trade.ticket for trade in current_trades)
-        self.monitored_trades = [
-            trade for trade in self.monitored_trades if trade.ticket in current_tickets
-        ]
+                print(f"Loaded existing trade: {trade.symbol} {trade.volume} lots, opened at {trade.time}, magic: {trade.magic}")
+                
+                # Convert MT5 time (which is typically in seconds since epoch) to datetime
+                trade_time = datetime.fromtimestamp(trade.time)
+                
+                # Track the most recent trade time
+                if latest_trade_time is None or trade_time > latest_trade_time:
+                    latest_trade_time = trade_time
+            
+            # If we found trades, set the last trade time to the most recent one
+            if latest_trade_time is not None:
+                print(f"Setting last trade time to {latest_trade_time} based on existing trades")
+                self.last_trade_time = latest_trade_time
+                
+                # Calculate and display remaining cooldown time if applicable
+                time_since_last = datetime.now() - self.last_trade_time
+                cooldown_remaining = self.cooldown_period - time_since_last
+                if cooldown_remaining.total_seconds() > 0:
+                    hours_remaining = cooldown_remaining.total_seconds() / 3600
+                    print(f"Cooldown in effect: {hours_remaining:.1f} hours remaining before new trades can be placed")
+                else:
+                    print("Cooldown period has elapsed. New trades can be placed when conditions are met.")
+        else:
+            print(f"No existing trades found for strategy {self.strategy_id} with magic number {self.magic_number}")
 
     async def _check_exit_conditions(self):
         """Check and handle exit conditions for existing trades"""
@@ -1333,21 +1350,118 @@ class StrategyMonitor:
             else:
                 print(f"Holding trades: Correlation high but pair not profitable (${total_profit:.2f})")
 
+    async def monitor_trades(self):
+        """Main trade monitoring loop"""
+        while active_strategies.get(self.strategy_id) and not self.is_stopping:
+            try:
+                # Update the list of monitored trades first
+                await self._update_monitored_trades()
+                
+                # Check if existing trades should be closed
+                await self._check_exit_conditions()
+                
+                # Only check for new entries if not already placing trades and cooldown has passed
+                if not self.placing_trades:
+                    # Check if lock is already held
+                    if self.trade_lock.locked():
+                        print(f"Trade lock is active, skipping entry check")
+                    else:
+                        # Check cooldown before trying to acquire lock
+                        cooldown_active = (self.last_trade_time is not None and 
+                                          datetime.now() - self.last_trade_time < self.cooldown_period)
+                        
+                        if not cooldown_active:
+                            # Try to acquire lock for trade placement
+                            try:
+                                await asyncio.wait_for(self.trade_lock.acquire(), timeout=0.5)
+                                try:
+                                    self.placing_trades = True
+                                    await self._check_entry_conditions()
+                                finally:
+                                    self.placing_trades = False
+                                    self.trade_lock.release()
+                            except asyncio.TimeoutError:
+                                print("Timeout while waiting for trade lock, will try again later")
+                        else:
+                            # Only log occasionally to avoid spam
+                            time_since_last = datetime.now() - self.last_trade_time
+                            cooldown_remaining = self.cooldown_period - time_since_last
+                            hours_remaining = cooldown_remaining.total_seconds() / 3600
+                            if int(hours_remaining) % 4 == 0:  # Log every 4 hours
+                                print(f"Skipping entry check: Cooldown in effect. {hours_remaining:.1f} hours remaining.")
+                
+                # Print current status
+                await self._print_status()
+                
+            except Exception as e:
+                print(f"Error in monitoring loop: {e}")
+                # Make sure to reset flags and release lock if there's an exception
+                self.placing_trades = False
+                if self.trade_lock.locked():
+                    try:
+                        self.trade_lock.release()
+                    except RuntimeError:
+                        pass  # Ignore if lock was not acquired by this task
+                
+                if not active_strategies.get(self.strategy_id):
+                    break
+            
+            # Sleep for a while before next iteration
+            await asyncio.sleep(1)
+
+    async def _update_monitored_trades(self):
+        """Update status of monitored trades"""
+        # Get all positions
+        all_positions = mt5.positions_get()
+        if all_positions is None:
+            all_positions = []
+        
+        # Filter by magic number
+        current_trades = [pos for pos in all_positions if pos.magic == self.magic_number]
+        
+        # Extract tickets for comparison
+        current_tickets = set(trade.ticket for trade in current_trades)
+        monitored_tickets = set(trade.ticket for trade in self.monitored_trades)
+        
+        # Find new and removed tickets
+        new_tickets = current_tickets - monitored_tickets
+        removed_tickets = monitored_tickets - current_tickets
+        
+        # Log changes
+        if new_tickets:
+            print(f"Strategy {self.strategy_id}: Found {len(new_tickets)} new trades to monitor")
+        
+        if removed_tickets:
+            print(f"Strategy {self.strategy_id}: Removing {len(removed_tickets)} trades no longer active")
+        
+        # Add new trades to monitored list
+        for trade in current_trades:
+            if trade.ticket in new_tickets:
+                self.monitored_trades.append(trade)
+                print(f"Added new trade to monitoring: Ticket {trade.ticket}, Symbol {trade.symbol}, "
+                      f"Type {'Buy' if trade.type == mt5.ORDER_TYPE_BUY else 'Sell'}, Magic {trade.magic}")
+        
+        # Remove trades that no longer exist
+        self.monitored_trades = [trade for trade in self.monitored_trades if trade.ticket in current_tickets]
+
     async def _check_entry_conditions(self):
         """Check and handle entry conditions for new trades"""
+        # Skip entry if stopping or already have trades
         if self.is_stopping or self.monitored_trades:
             return
-
+        
+        # Double-check cooldown period - defensive programming
         if (self.last_trade_time and 
             datetime.now() - self.last_trade_time < self.cooldown_period):
             return
-
+        
+        # Calculate indicators to decide on trade entry
         pair1, pair2 = self.params["currencyPairs"]
         correlation = calculate_correlation(
             pair1, 
             pair2, 
             int(self.params["correlationWindow"]),
-            self.timeframe  # Pass the numeric timeframe
+            self.timeframe
         )
 
         if correlation is None or correlation >= float(self.params["entryThreshold"]):
@@ -1356,24 +1470,42 @@ class StrategyMonitor:
         rsi1 = calculate_rsi(
             pair1, 
             int(self.params["rsiPeriod"]),
-            self.timeframe  # Pass the numeric timeframe
+            self.timeframe
         )
         rsi2 = calculate_rsi(
             pair2, 
             int(self.params["rsiPeriod"]),
-            self.timeframe  # Pass the numeric timeframe
+            self.timeframe
         )
 
         if rsi1 is None or rsi2 is None:
             return
 
         if self._check_rsi_conditions(rsi1, rsi2):
-            if rsi1 > float(self.params["rsiOverbought"]) and rsi2 < float(self.params["rsiOversold"]):
-                if await self._place_trades(pair1, pair2, is_first_pair_long=False, comment=self.params["tradeComment"]):
-                    self.last_trade_time = datetime.now()
-            else:
-                if await self._place_trades(pair1, pair2, is_first_pair_long=True, comment=self.params["tradeComment"]):
-                    self.last_trade_time = datetime.now()
+            # CRITICAL: Set last_trade_time BEFORE attempting to place trades
+            # This prevents another check from running while trade placement is in progress
+            original_last_trade_time = self.last_trade_time
+            self.last_trade_time = datetime.now()
+            print(f"Setting last_trade_time to {self.last_trade_time} BEFORE trade placement")
+            
+            try:
+                success = False
+                if rsi1 > float(self.params["rsiOverbought"]) and rsi2 < float(self.params["rsiOversold"]):
+                    success = await self._place_trades(pair1, pair2, is_first_pair_long=False, 
+                                                     comment=self.params["tradeComment"])
+                else:
+                    success = await self._place_trades(pair1, pair2, is_first_pair_long=True,
+                                                     comment=self.params["tradeComment"])
+                
+                if not success:
+                    # Reset last_trade_time if trade placement failed
+                    print("Trade placement failed, resetting last_trade_time")
+                    self.last_trade_time = original_last_trade_time
+            except Exception as e:
+                # Reset last_trade_time on any exception
+                print(f"Exception during trade placement: {e}, resetting last_trade_time")
+                self.last_trade_time = original_last_trade_time
+                raise  # Re-raise to allow the caller to handle it
 
     async def _place_trades(self, pair1, pair2, is_first_pair_long=True, comment=None):
         """Place a pair of trades based on the direction"""
@@ -1445,7 +1577,12 @@ class StrategyMonitor:
         closed_trades = 0
         failed_closures = 0
 
-        active_trades = mt5.positions_get(magic=self.magic_number)
+        active_trades = []
+        open_trades = mt5.positions_get(magic=self.magic_number)
+        for trade in open_trades:
+            if trade.magic == self.magic_number:
+                active_trades.append(trade)
+
         if not active_trades:
             print("No active trades found")
             return {
@@ -1496,7 +1633,11 @@ class StrategyMonitor:
                     failed_closures += 1
                     print(f"Error closing trade {trade.ticket}: {e}")
 
-        remaining_trades = mt5.positions_get(magic=self.magic_number)
+        open_trades = mt5.positions_get(magic=self.magic_number)
+        remaining_trades = []
+        for trade in open_trades:
+            if trade.magic == self.magic_number:
+                remaining_trades.append(trade)
         remaining_count = len(remaining_trades) if remaining_trades else 0
 
         status_message = (

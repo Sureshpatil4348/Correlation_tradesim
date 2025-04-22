@@ -122,13 +122,17 @@ const Strategies = () => {
       }
 
       const isStrategyComplete = (strategy) => {
-        return Object.values(strategy).every(value => {
-            if (Array.isArray(value)) {
-                return value.every(v => v !== '' && v !== null && v !== undefined);
-            }
-            return value !== '' && value !== null && value !== undefined;
+        return Object.entries(strategy).every(([key, value]) => {
+          if (key === 'status') return true;
+      
+          if (Array.isArray(value)) {
+            return value.every(v => v !== null && v !== undefined && (typeof v !== 'string' || v.trim() !== ''));
+          }
+      
+          return value !== null && value !== undefined && (typeof value !== 'string' || value.trim() !== '');
         });
-      }
+      };
+      
 
     return (
         <div style={{ marginLeft: '10vw', display: 'flex', flexDirection: 'column', width: '80vw', height: '100vh' }}>
