@@ -13,7 +13,7 @@ const Dashboard = () => {
             const response = await fetch("http://localhost:5001/mt5/trades");
             const data = await response.json();
             if (data.positions.length > 0) {
-                if (strategies.find(strategy => Number(strategy.magicNumber) === data.positions[0].magic)) {
+                if (strategies.find(strategy => Number(strategy.magicNumber) === data.positions[0]?.magic)) {
                     setStrategies(strategies.map(strategy => Number(strategy.magicNumber) === data.positions[0].magic && strategy.status === "inactive" ? {...strategy, status: "active"} : {...strategy, status: strategy.status}));
                     setStartActiveStrategy(true)
                 }
@@ -33,26 +33,23 @@ const Dashboard = () => {
         };
         const fetchHistory = async () => {
             setIsLoading(true);
-            const response = await fetch("http://localhost:5001/mt5/history");
-            const data = await response.json();
-            const groupedTrades = {};
-
-            data.forEach(trade => {
-            // Check if positionID already exists in the groupedTrades object
-            if (!groupedTrades[trade.position.position_id]) {
-                groupedTrades[trade.position.position_id] = {};  // Create an object for this positionID
+            try {
+                const response = await fetch("http://localhost:5001/mt5/history");
+                const data = await response.json();
+                
+                // Calculate total profit from trades array
+                const totalProfitCalc = data.reduce((acc, item) => {
+                    // Sum up profits from all trades in the trades array
+                    return acc + item.trades.reduce((tradeAcc, trade) => tradeAcc + (trade.profit || 0), 0);
+                }, 0);
+                
+                setHistory(data);
+                setTotalProfit(totalProfitCalc);
+            } catch (error) {
+                console.error("Error fetching history:", error);
+            } finally {
+                setIsLoading(false);
             }
-
-            // If we have the first trade, it will be the entry
-            if (!groupedTrades[trade.position.position_id].entry) {
-                groupedTrades[trade.position.position_id].entry = trade; // Mark this as the entry
-            } else {
-                groupedTrades[trade.position.position_id].exit = trade;  // The second trade will be the exit
-            }
-            });
-            setHistory(Object.values(groupedTrades));
-            setTotalProfit(data.reduce((acc, trade) => acc + trade.trade.profit, 0));
-            setIsLoading(false);
         };
         fetchAccountInfo();
         fetchHistory();
@@ -75,14 +72,37 @@ const Dashboard = () => {
                     <div style={{color: 'green', fontSize: '30px'}}>{trades?.positions?.length}</div>
                     <div style={{color: totalProfit > 0 ? 'green' : 'red', fontSize: '15px'}}><span style={{fontWeight: 'bold', color: 'gray', fontSize: '12px'}}>Strategies Running:</span> {strategies.filter(strategy => strategy.status === "active").length}/{strategies.length} </div>
                     {strategies.map(strategy => (
-                        <div key={strategy.magicNumber} style={{color: 'gray', fontSize: '12px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}><span style={{width: '25%', fontWeight: 'bold', color: 'gray', fontSize: '12px'}}>{strategy.name}</span><span style={{width: '25%', color: strategy.status === "active" ? 'green' : 'red', textAlign: 'center'}}>{strategy.status}</span><span style={{width: '25%', color: 'gray', fontSize: '12px'}}>Trades Running: {trades?.positions?.filter(trade => trade.magic === Number(strategy.magicNumber)).length}</span><span style={{width: '25%', color: 'gray', fontSize: '12px'}}>Past Trades: {history?.filter(trade => trade.entry.trade.magic === Number(strategy.magicNumber)).length}</span></div>
+                        <div key={strategy.magicNumber} style={{color: 'gray', fontSize: '12px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+                            <span style={{width: '25%', fontWeight: 'bold', color: 'gray', fontSize: '12px'}}>{strategy.name}</span>
+                            <span style={{width: '25%', color: strategy.status === "active" ? 'green' : 'red', textAlign: 'center'}}>{strategy.status}</span>
+                            <span style={{width: '25%', color: 'gray', fontSize: '12px'}}>
+                                Trades Running: {trades?.positions?.filter(trade => trade?.magic === Number(strategy.magicNumber))?.length || 0}
+                            </span>
+                            <span style={{width: '25%', color: 'gray', fontSize: '12px'}}>
+                                Past Trades: {history?.filter(item => 
+                                    item?.trades?.length > 0 && 
+                                    item?.trades[0]?.magic === Number(strategy.magicNumber)
+                                )?.length || 0}
+                            </span>
+                        </div>
                     ))}
                 </div>
                 <div style={{width: '30%', border: '1px solid #ccc', borderRadius: '5px', padding: '10px'}}>
                     <h3>Win Rate</h3>
                     <div style={{color: 'gray', fontSize: '12px'}}>Overall trading performance</div>
-                    <div style={{color: 'green', fontSize: '30px'}}>{(history?.reduce((acc, trade) => acc + (trade?.exit?.trade?.profit > 0 ? 1 : 0), 0) / history?.length * 100).toFixed(2)}%</div>
-                    <div style={{color: totalProfit > 0 ? 'green' : 'red', fontSize: '15px'}}><span style={{fontWeight: 'bold', color: 'gray', fontSize: '12px'}}>Total Winning Trades:</span> {history?.reduce((acc, trade) => acc + (trade?.exit?.trade?.profit > 0 ? 1 : 0), 0)}/{history?.length} </div>
+                    <div style={{color: 'green', fontSize: '30px'}}>
+                        {(history?.filter(item => item?.trades?.length > 0)?.reduce((acc, item) => {
+                            const lastTrade = item?.trades?.[item.trades.length - 1];
+                            return acc + ((lastTrade?.profit || 0) > 0 ? 1 : 0);
+                        }, 0) / (history?.filter(item => item?.trades?.length > 0)?.length || 1) * 100).toFixed(2)}%
+                    </div>
+                    <div style={{color: totalProfit > 0 ? 'green' : 'red', fontSize: '15px'}}>
+                        <span style={{fontWeight: 'bold', color: 'gray', fontSize: '12px'}}>Total Winning Trades:</span> 
+                        {history?.filter(item => item?.trades?.length > 0)?.reduce((acc, item) => {
+                            const lastTrade = item?.trades?.[item.trades.length - 1];
+                            return acc + ((lastTrade?.profit || 0) > 0 ? 1 : 0);
+                        }, 0)}/{history?.filter(item => item?.trades?.length > 0)?.length || 0}
+                    </div>
                 </div>
                 <div style={{width: '30%', border: '1px solid #ccc', borderRadius: '5px', padding: '10px'}}>
                     <h3>Total Profit</h3>
@@ -150,21 +170,49 @@ const Dashboard = () => {
                             <td style={{width: '10%', textAlign: 'center', borderBottom: trades.length > 0 ? '1px solid #ccc' : 'none'}}>Comment</td>
                             <td style={{width: '10%', textAlign: 'right', paddingRight: '10px', borderBottom: trades.length > 0 ? '1px solid #ccc' : 'none'}}>Strategy Name</td>
                         </tr>
-                        {history.filter(trade => trade.type !== 2).slice().reverse().map((trade, index) => (
-                            <tr key={trade.id} style={{height: '40px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
-                                <td style={{width: '10%', textAlign: 'left', paddingLeft: '10px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.position.symbol}</td>
-                                <td style={{width: '10%', textAlign: 'center', color: trade.entry.trade.type === 0 ? 'green' : 'red', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.trade.type === 0 ? 'Buy' : 'Sell'}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.trade.magic}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{new Date(trade.entry.position.time_setup_msc).toISOString().split('T')[0] + ' ' + new Date(trade.entry.position.time_setup_msc).toISOString().split('T')[1].split('.')[0]}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.position.price_current.toFixed(5)}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade?.exit?.position?.time_setup_msc ? new Date(trade?.exit?.position?.time_setup_msc).toISOString().split('T')[0] + ' ' + new Date(trade?.exit?.position?.time_setup_msc).toISOString().split('T')[1].split('.')[0] : ''}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade?.exit?.position?.price_current.toFixed(5)}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.trade.volume}</td>
-                                <td style={{width: '10%', textAlign: 'center', color: trade?.exit?.trade?.profit > 0 ? 'green' : 'red', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade?.exit?.trade?.profit}</td>
-                                <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{trade.entry.trade.comment}</td>
-                                <td style={{width: '10%', textAlign: 'right', paddingRight: '10px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>{strategies.find(strategy => Number(strategy.magicNumber) === trade.entry.trade.magic)?.name}</td>
-                            </tr>
-                        ))}
+                        {history.map((item, index) => {
+                            // Get first and last trade for entry/exit info
+                            const entryTrade = item.trades[0];
+                            const exitTrade = item.trades[item.trades.length - 1];
+                            
+                            return (
+                                <tr key={item?.position?.ticket || entryTrade?.ticket || index} style={{height: '40px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                    <td style={{width: '10%', textAlign: 'left', paddingLeft: '10px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {item?.position?.symbol || entryTrade?.symbol}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', color: entryTrade?.type === 0 ? 'green' : 'red', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.type === 0 ? 'Buy' : 'Sell'}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.magic}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.time ? new Date(entryTrade.time * 1000).toISOString().split('T')[0] + ' ' + new Date(entryTrade.time * 1000).toISOString().split('T')[1].split('.')[0] : ''}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.price?.toFixed(5)}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {exitTrade?.time ? new Date(exitTrade.time * 1000).toISOString().split('T')[0] + ' ' + new Date(exitTrade.time * 1000).toISOString().split('T')[1].split('.')[0] : ''}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {exitTrade?.price?.toFixed(5)}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.volume}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', color: exitTrade?.profit > 0 ? 'green' : 'red', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {exitTrade?.profit}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'center', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {entryTrade?.comment}
+                                    </td>
+                                    <td style={{width: '10%', textAlign: 'right', paddingRight: '10px', borderBottom: index !== history.length - 1 ? '1px solid #ccc' : 'none'}}>
+                                        {strategies.find(strategy => Number(strategy.magicNumber) === entryTrade?.magic)?.name}
+                                    </td>
+                                </tr>
+                            );
+                        })}
                         </tbody>
                     </table>
                 </div>

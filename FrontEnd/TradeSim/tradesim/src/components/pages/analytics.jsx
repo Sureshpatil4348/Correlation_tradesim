@@ -65,13 +65,22 @@ const Analytics = () => {
     };
 
     const isStrategyComplete = (strategy) => {
+        console.log("Strategy is", strategy);
         if (strategy === null) {
+            console.log("Strategy is null");
             return false;
         }
-        return Object.values(strategy).every(value => {
+        return Object.entries(strategy).every(([key, value]) => {
+            // Skip checking the status key
+            if (key === "status") {
+                return true;
+            }
+            
             if (Array.isArray(value)) {
+                console.log("Value is an array");
                 return value.every(v => v !== '' && v !== null && v !== undefined);
             }
+            console.log("Value is not an array");
             return value !== '' && value !== null && value !== undefined;
         });
     }

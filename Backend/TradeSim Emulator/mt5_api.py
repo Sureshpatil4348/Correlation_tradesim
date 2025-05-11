@@ -264,24 +264,53 @@ def get_account_info():
 
 def get_trade_history():
     if not mt5.initialize():
-        return {"error": "Failes to intialise MT5"}
+        return {"error": "Failed to initialize MT5"}
     
     from_date = datetime.now().timestamp() - (30 * 24 * 60 * 60)
     to_date = datetime.now().timestamp()
 
     history = mt5.history_deals_get(from_date, to_date)
     positions = mt5.history_orders_get(from_date, to_date)
+    
     trade_history = [deal._asdict() for deal in history if deal.type != 2] if history else []
     position_history = [pos._asdict() for pos in positions] if positions else []
-    max_len = max(len(trade_history), len(position_history))
+
+    # Create a dictionary to group trades by position ID
+    trades_by_position = {}
+    
+    # Group trades by their position ID
+    for trade in trade_history:
+        position_id = trade.get('position_id')
+        if position_id not in trades_by_position:
+            trades_by_position[position_id] = []
+        trades_by_position[position_id].append(trade)
 
     combined_history = []
-    for i in range(max_len):
+    
+    # Match positions with their corresponding trades
+    for position in position_history:
+        position_id = position.get('ticket')
+        related_trades = trades_by_position.get(position_id, [])
+        
         combined_entry = {
-            "trade": trade_history[i], 
-            "position": position_history[i]
+            "position": position,
+            "trades": related_trades
         }
         combined_history.append(combined_entry)
+
+    # Add any remaining trades that don't have a matching position
+    for position_id, trades in trades_by_position.items():
+        # Fix the any() check to safely handle None positions
+        if not any(
+            entry.get('position') is not None and 
+            entry['position'].get('ticket') == position_id 
+            for entry in combined_history
+        ):
+            combined_entry = {
+                "position": None,
+                "trades": trades
+            }
+            combined_history.append(combined_entry)
 
     return combined_history
 

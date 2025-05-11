@@ -7,9 +7,9 @@ from datetime import datetime
 import pytz
 
 # MT5 Connection Parameters
-LOGIN = 79689615
+LOGIN = 183320687
 PASSWORD = "SVsv12!@4348"
-SERVER = "Exness-MT5Trial8"
+SERVER = "Exness-MT5Real25"
 TERMINAL_PATH = r"C:\Program Files\MetaTrader 5 EXNESS\terminal64.exe"
 
 def connect_mt5():
